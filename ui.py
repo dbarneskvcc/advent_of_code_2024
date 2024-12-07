@@ -1,4 +1,5 @@
 """User Interface module"""
+
 # pylint: disable=pointless-statement
 # System imports.
 
@@ -143,6 +144,7 @@ class UserInterface:
         print(message)
         self._display_prompt()
         valid = False
+        value = None
         while not valid:
             user_input = input()
             if user_input.lower() == "y" or user_input.lower() == "n":
@@ -173,12 +175,12 @@ class UserInterface:
         print()
         print("1. Day One")
         print("2. Day Two")
-        print("3. Day Three")
-        print("4. Day Four")
-        print("5. Day Five")
-        print("6. Day Six")
-        print("7. Day Seven")
-        print("8. Day Eight")
+        # print("3. Day Three")
+        # print("4. Day Four")
+        # print("5. Day Five")
+        # print("6. Day Six")
+        # print("7. Day Seven")
+        # print("8. Day Eight")
         # print("9. Day Nine")
         # print("10. Day Ten")
         # print("11. Day Eleven")

@@ -1,3 +1,6 @@
+"""Day 1 module"""
+
+
 class Day1:
     """Class for solving day 1 problem"""
 

@@ -1,8 +1,8 @@
-"""Day 2 module"""
+"""Day 3 module"""
 
 
-class Day2:
-    """Class for solving day 2 problem"""
+class Day3:
+    """Class for solving day 3 problem"""
 
     def __init__(self, ui, file_reader):
         """Constructor"""

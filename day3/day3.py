@@ -50,4 +50,29 @@ class Day3:
     def solve_problem_2(self):
         """Solve problem 2"""
 
-        self.ui.print_warning("Solution not implemented yet.")
+        total = 0
+        # Get the lines of input
+        lines = self.file_reader.read_lines("day3/input.txt")
+
+        pattern = r"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)"
+
+        do_work = True
+        for line in lines:
+            results = re.findall(pattern, line)
+
+            num_only_pattern = r"\d*,\d*"
+            for result in results:
+                if result == "do()":
+                    do_work = True
+                elif result == "don't()":
+                    do_work = False
+                else:
+                    if do_work:
+                        num_results = re.findall(num_only_pattern, result)
+                        num_results = num_results[0]
+                        numbers = num_results.split(",")
+                        number = int(numbers[0]) * int(numbers[1])
+                        total += number
+
+        # Print success of value.
+        self.ui.print_success(f"The total is: {total}")

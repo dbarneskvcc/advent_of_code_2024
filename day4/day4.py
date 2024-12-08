@@ -91,18 +91,34 @@ class Day4:
 
         # Print success of value.
         self.ui.print_success(f"The total is: {total}")
-        raise ValueError("FOOBAR")
 
     def solve_problem_2(self):
         """Solve problem 2"""
 
         total = 0
-        # Get the lines of input
-        lines = self.file_reader.read_lines("day4/sample_input.txt")
+        word_search = []
+        a_locations = []
+
+        # Get the lines of input and create word search
+        lines = self.file_reader.read_lines("day4/input.txt")
+        for line in lines:
+            word_search.append(list(line))
+
+        # Find the location of all "A"s
+        for row_idx, row in enumerate(word_search):
+            for col_idx, val in enumerate(row):
+                if val == "A":
+                    a_locations.append((row_idx, col_idx))
+
+        # print(a_locations)
+
+        # For each coord of "A", check to see if it is part of a cross.
+        for coord in a_locations:
+            if self.check_for_cross(coord, word_search):
+                total += 1
 
         # Print success of value.
         self.ui.print_success(f"The total is: {total}")
-        raise ValueError("FOOBAR")
 
     def transpose_word_search(self, word_search):
         """Transpose a word search"""
@@ -139,3 +155,72 @@ class Day4:
             reversed_ws.append(new_row)
 
         return reversed_ws
+
+    def check_for_cross(self, coord, word_search):
+        """ "Check to see if surrounding area is a cross of MAS"""
+        return_value = False
+        y = coord[0]
+        x = coord[1]
+
+        # If the "A" is on the outside of the word search, it can not be part of "MAS"
+        if y <= 0 or x <= 0 or y >= len(word_search) - 1 or x >= len(word_search) - 1:
+            return False
+
+        # M M
+        #  A
+        # S S
+        if (
+            # Top left
+            word_search[y - 1][x - 1] == "M"
+            # Top right
+            and word_search[y - 1][x + 1] == "M"
+            # Bottom left
+            and word_search[y + 1][x - 1] == "S"
+            # Bottom right
+            and word_search[y + 1][x + 1] == "S"
+        ):
+            return_value = True
+        # S M
+        #  A
+        # S M
+        elif (
+            # Top left
+            word_search[y - 1][x - 1] == "S"
+            # Top right
+            and word_search[y - 1][x + 1] == "M"
+            # Bottom left
+            and word_search[y + 1][x - 1] == "S"
+            # Bottom right
+            and word_search[y + 1][x + 1] == "M"
+        ):
+            return_value = True
+        # M S
+        #  A
+        # M S
+        elif (
+            # Top left
+            word_search[y - 1][x - 1] == "M"
+            # Top right
+            and word_search[y - 1][x + 1] == "S"
+            # Bottom left
+            and word_search[y + 1][x - 1] == "M"
+            # Bottom right
+            and word_search[y + 1][x + 1] == "S"
+        ):
+            return_value = True
+        # S S
+        #  A
+        # M M
+        elif (
+            # Top left
+            word_search[y - 1][x - 1] == "S"
+            # Top right
+            and word_search[y - 1][x + 1] == "S"
+            # Bottom left
+            and word_search[y + 1][x - 1] == "M"
+            # Bottom right
+            and word_search[y + 1][x + 1] == "M"
+        ):
+            return_value = True
+
+        return return_value
